@@ -22,7 +22,12 @@ const staticFooterLinks = [
 const socialLinks = [
   {
     name: "Instagram",
-    href: "https://instagram",
+    href: "https://instagram.com/silver_watch_gallery/",
+    icon: FaInstagram,
+  },
+  {
+    name: "Instagram",
+    href: "https://instagram.com/silver3_watch_gallery",
     icon: FaInstagram,
   },
   {
@@ -32,7 +37,7 @@ const socialLinks = [
   },
   {
     name: "WhatsApp",
-    href: "https://wa.me/",
+    href: "https://chat.whatsapp.com/K8uXErmCrdDBvX4sG2taE2?s=sh&p=a&ilr=0",
     icon: FaWhatsapp,
   },
 ];
@@ -51,14 +56,27 @@ const Footer = async () => {
             <Link href={"/"}>
               <Image src={"/logo.svg"} width={100} height={100} alt="logo" />
             </Link>
-            <h2>شعبه فردیس</h2>
+            <h2>شعبه مرکزی</h2>
             <p className="text-zinc-400">
-              فردیس، بین فلکه دوم و کانال غربی، فروشگاه ساعت سیلور
+              فردیس، بین کانال و فلکه دوم، نبش خیابان هجدهم، پلاک 1069، فروشگاه
+              ساعت سیلور، صمدی
+              <br />
+              شماره تماس:
+              <a href="tel:+982636505796">36505796-026</a>
+              <br />
+              صمدی:
+              <a href="tel:+989121497245">1497245-0912</a>
             </p>
 
-            <h2>شعبه کرج</h2>
+            <h2>شعبه فردیس</h2>
             <p className="text-zinc-400">
-              فردیس، بین فلکه دوم و کانال غربی، فروشگاه ساعت سیلور
+              فردیس، نرسیده به کانال، رو به روی ایستگاه اتوبوس، طبقه همکف، پاساژ
+              نظری، پلاک 35
+              <br />
+              شماره تماس:
+              <a href="tel:+9836557863"> 36557863-026</a>
+              <br />
+              صمدی: <a href="tel:+989121497245">1497245-0912</a>
             </p>
           </div>
 
