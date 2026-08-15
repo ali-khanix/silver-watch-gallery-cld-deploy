@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
     await writeFile(filePath, buffer);
 
-    return NextResponse.json({ url: `/uploads/${filename}` });
+    return NextResponse.json({ url: `/api/uploads/${filename}` });
   } catch (err) {
     console.error("Upload error:", err);
     return NextResponse.json({ error: "خطا در آپلود تصویر" }, { status: 500 });
