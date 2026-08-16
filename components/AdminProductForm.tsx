@@ -26,6 +26,7 @@ type ExistingProduct = {
   offer: number | null;
   gender: string | null;
   colors: string[];
+  features: string[];
   images: Record<string, string[]>;
   categoryId: string;
   brandId: string | null;
@@ -68,6 +69,7 @@ const AdminProductForm = ({
           shortDescription: existingProduct.shortDescription ?? "",
           description: existingProduct.description ?? "",
           price: existingProduct.price,
+          features: existingProduct?.features?.join("\n") ?? "",
           offer: existingProduct.offer ?? undefined,
           gender: (existingProduct.gender ?? undefined) as any,
           categoryId: existingProduct.categoryId,
@@ -155,6 +157,12 @@ const AdminProductForm = ({
 
     const images: Record<string, string[]> = {};
     const colors: string[] = [];
+    const featuresArray = values.features
+      ? values.features
+          .split("\n")
+          .map((f) => f.trim())
+          .filter(Boolean)
+      : [];
 
     values.variants.forEach((v, i) => {
       images[v.color] = variantImages[i];
@@ -166,6 +174,7 @@ const AdminProductForm = ({
       slug: values.slug,
       shortDescription: values.shortDescription,
       description: values.description,
+      features: featuresArray,
       price: values.price,
       offer: values.offer,
       gender: values.gender,
@@ -232,6 +241,13 @@ const AdminProductForm = ({
         placeholder="توضیح کوتاه"
         className="border rounded-md p-2 w-full"
         {...register("shortDescription")}
+      />
+
+      <textarea
+        placeholder="ویژگی‌های اصلی (هر خط یک ویژگی، مثلا: اسلازنجر اورجینال انگلیس)"
+        className="border rounded-md p-2 w-full"
+        rows={4}
+        {...register("features")}
       />
 
       <textarea

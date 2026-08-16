@@ -21,6 +21,7 @@ export const productFormSchema = z.object({
     .regex(/^[a-z0-9-]+$/, "اسلاگ فقط حروف انگلیسی، عدد و خط تیره"),
   shortDescription: z.string().optional(),
   description: z.string().optional(),
+  features: z.string().optional(),
   price: z.coerce.number().positive("قیمت باید مثبت باشد"),
   offer: z.coerce.number().optional(),
   gender: z.enum(["men", "women", "kids"]).optional(),

@@ -22,6 +22,7 @@ export type ProductType = {
   offer: number | null;
   gender: string | null;
   colors: string[];
+  features: string[];
   images: Record<string, string[]>;
   inStock: boolean;
   category: CategoryType;

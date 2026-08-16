@@ -17,10 +17,10 @@ export default async function BrandsPage() {
             <Link
               key={brand.id}
               href={`/brands/${brand.slug}`}
-              className="border rounded-2xl p-6 flex flex-col items-center gap-3 text-center font-medium hover:bg-zinc-50 transition-colors"
+              className="border rounded-2xl p-2 flex flex-col items-center gap-3 text-center font-medium hover:bg-zinc-50 transition-colors"
             >
               {brand.logo ? (
-                <div className="relative w-16 h-16">
+                <div className="relative w-38 h-38">
                   <Image
                     src={brand.logo}
                     alt={brand.name}
@@ -33,7 +33,7 @@ export default async function BrandsPage() {
                   بدون لوگو
                 </div>
               )}
-              {brand.name}
+              {/* {brand.name} */}
             </Link>
           ))}
         </div>

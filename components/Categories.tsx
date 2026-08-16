@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import { CategoryNav } from "@/lib/category-type";
-import Image from "next/image";
 
 type Brand = { id: string; name: string; slug: string; logo: string | null };
 
@@ -45,7 +44,7 @@ const Categories = ({
   ];
 
   return (
-    <NavigationMenu dir="rtl" className="py-2" viewport={false}>
+    <NavigationMenu dir="rtl" className="py-2 z-50" viewport={false}>
       <NavigationMenuList>
         {/* DYNAMIC CATEGORIES DROPDOWN */}
         {groups.length > 0 && (
@@ -109,7 +108,7 @@ const Categories = ({
                       href={`/brands/${brand.slug}`}
                       className="flex items-center gap-2"
                     >
-                      {brand.logo && (
+                      {/* {brand.logo && (
                         <div className="relative w-5 h-5 shrink-0">
                           <Image
                             src={brand.logo}
@@ -118,7 +117,7 @@ const Categories = ({
                             className="object-contain"
                           />
                         </div>
-                      )}
+                      )} */}
                       {brand.name}
                     </Link>
                   </NavigationMenuLink>

@@ -21,12 +21,12 @@ const staticFooterLinks = [
 
 const socialLinks = [
   {
-    name: "Instagram",
+    name: "Instagram 1",
     href: "https://instagram.com/silver_watch_gallery/",
     icon: FaInstagram,
   },
   {
-    name: "Instagram",
+    name: "Instagram 2",
     href: "https://instagram.com/silver3_watch_gallery",
     icon: FaInstagram,
   },

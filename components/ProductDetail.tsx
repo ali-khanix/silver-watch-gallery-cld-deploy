@@ -5,7 +5,7 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import useCartStore from "@/stores/cartStore";
 import { ProductType } from "@/lib/schema";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Check } from "lucide-react";
 
 const ProductDetail = ({ product }: { product: ProductType }) => {
   const [color, setColor] = useState(product.colors[0]);
@@ -44,7 +44,7 @@ const ProductDetail = ({ product }: { product: ProductType }) => {
               <button
                 key={img + index}
                 onClick={() => setActiveImage(index)}
-                className={`relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border-2 ${
+                className={`relative w-16 h-16 rounded-xl overflow-hidden shrink-0 border-2 ${
                   activeImage === index
                     ? "border-zinc-950"
                     : "border-transparent"
@@ -71,6 +71,27 @@ const ProductDetail = ({ product }: { product: ProductType }) => {
         <h1 className="text-3xl sm:text-4xl font-bold text-zinc-900 mb-2 leading-tight">
           {product.name}
         </h1>
+
+        {product.features && product.features.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-sm font-medium text-zinc-900 mb-3">
+              ویژگی‌های اصلی
+            </h2>
+            <ul className="flex flex-col gap-2">
+              {product.features.map((feature, i) => (
+                <li
+                  key={i}
+                  className="flex items-center gap-2 text-sm text-zinc-700"
+                >
+                  <span className="flex items-center justify-center w-5 h-5 rounded-full bg-green-100 text-green-600 shrink-0">
+                    <Check size={12} strokeWidth={3} />
+                  </span>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {product.shortDescription && (
           <p className="text-zinc-500 mb-6">{product.shortDescription}</p>
