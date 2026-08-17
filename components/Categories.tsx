@@ -52,7 +52,7 @@ const Categories = ({
             <NavigationMenuTrigger className={triggerClassName}>
               دسته بندی
             </NavigationMenuTrigger>
-            <NavigationMenuContent className="right-0 min-w-max p-4">
+            <NavigationMenuContent className="right-0 min-w-max max-w-[85vw] max-h-[70vh] overflow-y-auto p-4">
               <div className="flex flex-col gap-8">
                 <NavigationMenuLink
                   asChild

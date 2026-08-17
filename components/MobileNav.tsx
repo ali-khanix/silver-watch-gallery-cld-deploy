@@ -68,6 +68,13 @@ const MobileNav = ({
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="flex flex-col gap-4 p-4 ">
+                  <Link
+                    href="/products"
+                    className="text-base font-medium text-zinc-900 hover:text-zinc-700"
+                    onClick={() => setOpen(false)}
+                  >
+                    همه محصولات
+                  </Link>
                   {groups.map((group) => (
                     <Collapsible key={group.title}>
                       <CollapsibleTrigger className="flex w-full items-center justify-between text-right text-base font-medium text-zinc-900">
@@ -106,6 +113,13 @@ const MobileNav = ({
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="flex flex-col gap-3 p-4 text-sm text-zinc-700">
+                  <Link
+                    href="/brands"
+                    className="font-medium text-zinc-900 hover:text-zinc-700"
+                    onClick={() => setOpen(false)}
+                  >
+                    همه ی برند ها
+                  </Link>
                   {brands.map((brand) => (
                     <Link
                       key={brand.id}
