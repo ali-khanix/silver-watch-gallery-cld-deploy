@@ -14,6 +14,9 @@ export const metadata = {
   verification: {
     google: "lS2HhrlkBDWK3cRaFEEAJ1Uf0wydhjOTzTRCus1R3YI",
   },
+  orther: {
+    enamad: "12252842",
+  },
 };
 
 export const dynamic = "force-dynamic";
