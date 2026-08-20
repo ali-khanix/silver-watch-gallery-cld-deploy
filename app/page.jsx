@@ -49,6 +49,42 @@ export default async function Home() {
             />
           </Link>
         </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 mt-2 sm:mt-4">
+          <Link
+            href="/products?gender=kids"
+            className="relative h-40 sm:h-64 rounded-[20px] overflow-hidden block"
+          >
+            <Image
+              src={"/images/kids-watch-with-call-to-action-banner.webp"}
+              fill
+              alt="ساعت های بچگانه"
+              className="object-cover"
+            />
+          </Link>
+          <Link
+            href="/products?gender=smart"
+            className="relative h-40 sm:h-64 rounded-[20px] overflow-hidden block"
+          >
+            <Image
+              src={"/images/smart-watch-with-call-to-action-banner.webp"}
+              fill
+              alt="ساعت های هوشمند"
+              className="object-cover"
+            />
+          </Link>
+          <Link
+            href="/products?gender=couple"
+            className="relative h-40 sm:h-64 rounded-[20px] overflow-hidden block"
+          >
+            <Image
+              src={"/images/couple-watch-with-call-to-action-banner.webp"}
+              fill
+              alt="ست ساعت مردانه و زنانه"
+              className="object-cover"
+            />
+          </Link>
+        </div>
       </section>
 
       <section id="products" className="mt-10">

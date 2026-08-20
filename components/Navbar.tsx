@@ -23,9 +23,9 @@ const Navbar = async () => {
         {/* LOGO */}
         <Link href={"/"} className="sm:mx-auto sm:w-3/12 sm:translate-y-3">
           <Image
-            src={`/logo.svg`}
+            src={`/logo.png`}
             width={100}
-            height={100}
+            height={105}
             alt="لوگو گالری ساعت سیلور"
             className="max-w-none"
           />

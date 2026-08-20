@@ -31,12 +31,20 @@ const MobileNav = ({
 
   const menGroup = categories.filter((c) => c.group === "men");
   const womenGroup = categories.filter((c) => c.group === "women");
+  const kidsGroup = categories.filter((c) => c.group === "kids");
+  const smartGroup = categories.filter((c) => c.group === "smart");
+  const coupleGroup = categories.filter((c) => c.group === "couple");
   const ungrouped = categories.filter((c) => !c.group);
 
   const groups = [
     ...(menGroup.length ? [{ title: "ساعت مچی مردانه", items: menGroup }] : []),
     ...(womenGroup.length
       ? [{ title: "ساعت مچی زنانه", items: womenGroup }]
+      : []),
+    ...(kidsGroup.length ? [{ title: "ساعت بچگانه", items: kidsGroup }] : []),
+    ...(smartGroup.length ? [{ title: "ساعت هوشمند", items: smartGroup }] : []),
+    ...(coupleGroup.length
+      ? [{ title: "ست مردانه و زنانه", items: coupleGroup }]
       : []),
     ...(ungrouped.length
       ? [{ title: "سایر دسته بندی ها", items: ungrouped }]
@@ -53,7 +61,7 @@ const MobileNav = ({
           <SheetTitle>منو</SheetTitle>
         </SheetHeader>
 
-        <ul className="flex flex-col gap-4 mt-4">
+        <ul className="flex flex-col gap-4 mt-4 flex-1 min-h-0 overflow-y-auto pb-8">
           {/* CATEGORIES */}
           {groups.length > 0 && (
             <Collapsible>

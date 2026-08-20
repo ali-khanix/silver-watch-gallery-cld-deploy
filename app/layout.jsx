@@ -11,6 +11,9 @@ import { faIR } from "@clerk/localizations";
 export const metadata = {
   title: "گالری ساعت سیلور",
   description: "فروشگاه ساعت های مردانه و زنانه",
+  verification: {
+    google: "lS2HhrlkBDWK3cRaFEEAJ1Uf0wydhjOTzTRCus1R3YI",
+  },
 };
 
 export const dynamic = "force-dynamic";

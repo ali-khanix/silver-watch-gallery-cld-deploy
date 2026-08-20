@@ -35,11 +35,19 @@ const Categories = ({
 }) => {
   const menGroup = categories.filter((c) => c.group === "men");
   const womenGroup = categories.filter((c) => c.group === "women");
+  const kidsGroup = categories.filter((c) => c.group === "kids");
+  const smartGroup = categories.filter((c) => c.group === "smart");
+  const coupleGroup = categories.filter((c) => c.group === "couple");
   const ungrouped = categories.filter((c) => !c.group);
 
   const groups = [
     ...(menGroup.length ? [{ title: "مردانه", items: menGroup }] : []),
     ...(womenGroup.length ? [{ title: "زنانه", items: womenGroup }] : []),
+    ...(kidsGroup.length ? [{ title: "بچگانه", items: kidsGroup }] : []),
+    ...(smartGroup.length ? [{ title: "ساعت هوشمند", items: smartGroup }] : []),
+    ...(coupleGroup.length
+      ? [{ title: "ست مردانه و زنانه", items: coupleGroup }]
+      : []),
     ...(ungrouped.length ? [{ title: "سایر", items: ungrouped }] : []),
   ];
 
@@ -90,24 +98,24 @@ const Categories = ({
             <NavigationMenuTrigger className={triggerClassName}>
               برند ها
             </NavigationMenuTrigger>
-            <NavigationMenuContent className="right-0 min-w-max p-4">
-              <div className="flex flex-col gap-1">
-                <NavigationMenuLink
-                  asChild
-                  className={cn(linkClassName, "font-bold")}
-                >
-                  <Link href="/brands">همه ی برند ها</Link>
-                </NavigationMenuLink>
+            <NavigationMenuContent className="left-auto! right-0 w-[min(92vw,900px)]! max-h-[70vh] overflow-y-auto! p-4">
+              <NavigationMenuLink
+                asChild
+                className={cn(linkClassName, "font-bold mb-2")}
+              >
+                <Link href="/brands">همه ی برند ها</Link>
+              </NavigationMenuLink>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-1">
                 {brands.map((brand) => (
                   <NavigationMenuLink
                     asChild
                     key={brand.id}
-                    className={linkClassName}
+                    className={cn(
+                      linkClassName,
+                      "flex-row! items-center gap-2"
+                    )}
                   >
-                    <Link
-                      href={`/brands/${brand.slug}`}
-                      className="flex items-center gap-2"
-                    >
+                    <Link href={`/brands/${brand.slug}`}>
                       {/* {brand.logo && (
                         <div className="relative w-5 h-5 shrink-0">
                           <Image

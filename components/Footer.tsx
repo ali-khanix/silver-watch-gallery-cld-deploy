@@ -54,7 +54,7 @@ const Footer = async () => {
         <div className="flex flex-col gap-8 sm:gap-4 sm:flex-row w-full justify-between">
           <div className="sm:max-w-[25%] flex flex-col gap-2 border-b sm:border-b-0 pb-2">
             <Link href={"/"}>
-              <Image src={"/logo.svg"} width={100} height={100} alt="logo" />
+              <Image src={"/logo.png"} width={100} height={105} alt="logo" />
             </Link>
             <h2>شعبه مرکزی</h2>
             <p className="text-zinc-400">

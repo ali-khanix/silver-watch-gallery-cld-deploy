@@ -7,7 +7,7 @@ export const categoryFormSchema = z.object({
     .min(1, "اسلاگ الزامی است")
     .regex(/^[a-z0-9-]+$/, "اسلاگ فقط حروف انگلیسی، عدد و خط تیره"),
 
-  group: z.enum(["men", "women"]).optional(),
+  group: z.enum(["men", "women", "kids", "smart", "couple"]).optional(),
 });
 
 export type CategoryFormInput = z.input<typeof categoryFormSchema>;

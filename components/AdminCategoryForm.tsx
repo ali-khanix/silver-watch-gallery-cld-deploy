@@ -54,6 +54,9 @@ const AdminCategoryForm = () => {
         <option value="">بدون گروه</option>
         <option value="men">مردانه</option>
         <option value="women">زنانه</option>
+        <option value="kids">بچگانه</option>
+        <option value="smart">ساعت هوشمند</option>
+        <option value="couple">ست مردانه و زنانه</option>
       </select>
       <div>
         <input

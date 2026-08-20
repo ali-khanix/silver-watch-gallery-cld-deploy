@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 type Product = {
   id: string;
@@ -12,9 +13,12 @@ type Product = {
   category: { name: string };
 };
 
+const VISIBLE_COUNT = 5;
+
 const AdminProductsTable = ({ products }: { products: Product[] }) => {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(false);
 
   const handleDelete = async (id: string, name: string) => {
     const confirmed = window.confirm(
@@ -40,9 +44,14 @@ const AdminProductsTable = ({ products }: { products: Product[] }) => {
     return <p className="text-zinc-500 text-sm">هنوز محصولی اضافه نشده</p>;
   }
 
+  const visibleProducts = expanded
+    ? products
+    : products.slice(0, VISIBLE_COUNT);
+  const hiddenCount = products.length - VISIBLE_COUNT;
+
   return (
     <div className="flex flex-col gap-2">
-      {products.map((product) => (
+      {visibleProducts.map((product) => (
         <div
           key={product.id}
           className="flex items-center justify-between border rounded-md p-3"
@@ -70,6 +79,23 @@ const AdminProductsTable = ({ products }: { products: Product[] }) => {
           </div>
         </div>
       ))}
+
+      {products.length > VISIBLE_COUNT && (
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          className="mt-2 flex items-center gap-1 text-sm text-zinc-600 hover:text-zinc-900"
+        >
+          {expanded ? (
+            <>
+              <ChevronUp size={16} /> نمایش کمتر
+            </>
+          ) : (
+            <>
+              <ChevronDown size={16} /> نمایش {hiddenCount} محصول دیگر
+            </>
+          )}
+        </button>
+      )}
     </div>
   );
 };
