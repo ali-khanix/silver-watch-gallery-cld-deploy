@@ -9,7 +9,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { faIR } from "@clerk/localizations";
 
 export const metadata = {
-  title: "گالری ساعت سیلور",
+  title: "12252842",
   description: "فروشگاه ساعت های مردانه و زنانه",
   verification: {
     google: "lS2HhrlkBDWK3cRaFEEAJ1Uf0wydhjOTzTRCus1R3YI",
