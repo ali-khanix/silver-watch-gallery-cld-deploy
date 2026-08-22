@@ -9,8 +9,35 @@ export default async function Home() {
     orderBy: { order: "asc" },
   });
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "گالری ساعت سیلور",
+    url: "https://silverwatchgallery.com",
+    logo: "https://silverwatchgallery.com/logo.svg",
+  };
+
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "گالری ساعت سیلور",
+    url: "https://silverwatchgallery.com",
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteJsonLd),
+        }}
+      />
       <HeroCarousel slides={heroSlides} />
 
       <section id="products" className="mt-10">

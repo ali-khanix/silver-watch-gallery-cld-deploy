@@ -9,12 +9,12 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { faIR } from "@clerk/localizations";
 
 export const metadata = {
-  title: "12252842",
+  title: "گالری ساعت سیلور",
   description: "فروشگاه ساعت های مردانه و زنانه",
   verification: {
     google: "lS2HhrlkBDWK3cRaFEEAJ1Uf0wydhjOTzTRCus1R3YI",
   },
-  orther: {
+  other: {
     enamad: "12252842",
   },
 };
