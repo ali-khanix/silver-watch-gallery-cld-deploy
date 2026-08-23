@@ -9,6 +9,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { faIR } from "@clerk/localizations";
 
 export const metadata = {
+  metadataBase: new URL("https://silverwatchgallery.com"),
   title: "12252842",
   description: "فروشگاه ساعت های مردانه و زنانه",
   verification: {
@@ -16,6 +17,31 @@ export const metadata = {
   },
   other: {
     enamad: "12252842",
+  },
+
+  openGraph: {
+    type: "website",
+    url: "https://silverwatchgallery.com",
+    title: "گالری ساعت سیلور",
+    description: "ساعت ها حرفه ای و اکسسوری را از سایت ما پیدا کنید.",
+    siteName: "Silver Watch Gallery",
+    locale: "fa_IR",
+
+    images: [
+      {
+        url: "https://silverwatchgallery.com/images/hero-1.webp",
+        width: 1200,
+        height: 630,
+        alt: "گالری ساعت سیلور",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "گالری ساعت سیلور",
+    description: "ساعت ها حرفه ای و اکسسوری را از سایت ما پیدا کنید.",
+    images: ["https://silverwatchgallery.com/images/hero-1.webp"],
   },
 };
 
