@@ -172,7 +172,7 @@ const ProductDetail = ({ product }: { product: ProductType }) => {
                 return (
                   <div
                     key={i}
-                    className="flex items-center gap-[100px] py-3 border-b border-zinc-100 last:border-none"
+                    className="flex items-center gap-25 py-3 border-b border-zinc-100 last:border-none"
                   >
                     {label ? (
                       <>

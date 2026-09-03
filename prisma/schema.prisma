@@ -58,6 +58,16 @@ model HeroSlide {
   createdAt DateTime @default(now())
 }
 
+model Banner {
+  id        String   @id @default(cuid())
+  title     String
+  imageUrl  String
+  link      String?
+  size      String   @default("small") // "large" | "small"
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
 model Order {
   id        String      @id @default(cuid())
   userId    String

@@ -6,19 +6,22 @@ import AdminCategoryForm from "@/components/AdminCategoryForm";
 import AdminBrandForm from "@/components/AdminBrandForm";
 import AdminBrandsList from "@/components/AdminBrandsList";
 import AdminHeroSlides from "@/components/AdminHeroSlides";
+import AdminBanners from "@/components/AdminBanners";
 import AdminLogoutButton from "@/components/AdminLogoutButton";
 import Link from "next/link";
 
 export default async function AdminPage() {
-  const [categories, brands, products, heroSlides] = await Promise.all([
-    prisma.category.findMany({ orderBy: { name: "asc" } }),
-    prisma.brand.findMany({ orderBy: { name: "asc" } }),
-    prisma.product.findMany({
-      include: { category: true, brand: true },
-      orderBy: { createdAt: "desc" },
-    }),
-    prisma.heroSlide.findMany({ orderBy: { order: "asc" } }),
-  ]);
+  const [categories, brands, products, heroSlides, banners] =
+    await Promise.all([
+      prisma.category.findMany({ orderBy: { name: "asc" } }),
+      prisma.brand.findMany({ orderBy: { name: "asc" } }),
+      prisma.product.findMany({
+        include: { category: true, brand: true },
+        orderBy: { createdAt: "desc" },
+      }),
+      prisma.heroSlide.findMany({ orderBy: { order: "asc" } }),
+      prisma.banner.findMany({ orderBy: { order: "asc" } }),
+    ]);
 
   return (
     <div
@@ -37,6 +40,15 @@ export default async function AdminPage() {
         <h2 className="text-xl font-bold mb-4">اسلایدهای صفحه اصلی</h2>
         <AdminHeroSlides slides={heroSlides} />
       </section>
+
+      <hr />
+
+      <section>
+        <h2 className="text-xl font-bold mb-4">بنرهای صفحه اصلی</h2>
+        <AdminBanners banners={banners} />
+      </section>
+
+      <hr />
 
       <section>
         <h2 className="text-xl font-bold mb-4">افزودن دسته بندی</h2>

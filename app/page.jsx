@@ -9,6 +9,14 @@ export default async function Home() {
     orderBy: { order: "asc" },
   });
 
+  const banners = await prisma.banner.findMany({
+    orderBy: { order: "asc" },
+  });
+  const largeBanners = banners.filter((b) => b.size === "large");
+  const smallBanners = banners.filter((b) => b.size === "small");
+  const smallBannersGridClass =
+    smallBanners.length >= 4 ? "sm:grid-cols-4" : "sm:grid-cols-3";
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -52,66 +60,45 @@ export default async function Home() {
 
       {/* BANNERS */}
       <section id="banners" className="mt-8 mx-2 sm:mx-0">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
-          <Link
-            href="/products?gender=men"
-            className="relative h-62.5 sm:h-100 rounded-[20px] overflow-hidden block"
-          >
-            <Image
-              src={"/images/mens-watch-with-call-to-action-banner.webp"}
-              alt="ساعت های مردانه"
-              fill
-              className="object-cover"
-            />
-          </Link>
-          <Link
-            href="/products?gender=women"
-            className="relative h-62.5 sm:h-100 rounded-[20px] overflow-hidden block"
-          >
-            <Image
-              src={"/images/womens-watch-with-call-to-action-banner.webp"}
-              fill
-              alt="ساعت های زنانه"
-              className="object-cover"
-            />
-          </Link>
-        </div>
+        {largeBanners.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
+            {largeBanners.map((banner) => (
+              <Link
+                key={banner.id}
+                href={banner.link || "#"}
+                className="relative h-62.5 sm:h-100 rounded-[20px] overflow-hidden block"
+              >
+                <Image
+                  src={banner.imageUrl}
+                  alt={banner.title}
+                  fill
+                  className="object-cover"
+                />
+              </Link>
+            ))}
+          </div>
+        )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 mt-2 sm:mt-4">
-          <Link
-            href="/products?gender=kids"
-            className="relative h-40 sm:h-64 rounded-[20px] overflow-hidden block"
+        {smallBanners.length > 0 && (
+          <div
+            className={`grid grid-cols-1 ${smallBannersGridClass} gap-2 sm:gap-4 mt-2 sm:mt-4`}
           >
-            <Image
-              src={"/images/kids-watch-with-call-to-action-banner.webp"}
-              fill
-              alt="ساعت های بچگانه"
-              className="object-cover"
-            />
-          </Link>
-          <Link
-            href="/products?gender=smart"
-            className="relative h-40 sm:h-64 rounded-[20px] overflow-hidden block"
-          >
-            <Image
-              src={"/images/smart-watch-with-call-to-action-banner.webp"}
-              fill
-              alt="ساعت های هوشمند"
-              className="object-cover"
-            />
-          </Link>
-          <Link
-            href="/products?gender=couple"
-            className="relative h-40 sm:h-64 rounded-[20px] overflow-hidden block"
-          >
-            <Image
-              src={"/images/couple-watch-with-call-to-action-banner.webp"}
-              fill
-              alt="ست ساعت مردانه و زنانه"
-              className="object-cover"
-            />
-          </Link>
-        </div>
+            {smallBanners.map((banner) => (
+              <Link
+                key={banner.id}
+                href={banner.link || "#"}
+                className="relative h-40 sm:h-64 rounded-[20px] overflow-hidden block"
+              >
+                <Image
+                  src={banner.imageUrl}
+                  fill
+                  alt={banner.title}
+                  className="object-cover"
+                />
+              </Link>
+            ))}
+          </div>
+        )}
       </section>
 
       <section id="products" className="mt-10">
