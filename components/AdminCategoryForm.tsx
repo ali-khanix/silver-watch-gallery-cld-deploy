@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { categoryFormSchema, CategoryFormValues } from "@/lib/admin-schema";
+import { CATEGORY_GROUPS } from "@/lib/category-groups";
 
 const AdminCategoryForm = () => {
   const router = useRouter();
@@ -52,11 +53,11 @@ const AdminCategoryForm = () => {
         defaultValue=""
       >
         <option value="">بدون گروه</option>
-        <option value="men">مردانه</option>
-        <option value="women">زنانه</option>
-        <option value="kids">بچگانه</option>
-        <option value="smart">ساعت هوشمند</option>
-        <option value="couple">ست مردانه و زنانه</option>
+        {CATEGORY_GROUPS.map((g) => (
+          <option key={g.value} value={g.value}>
+            {g.label}
+          </option>
+        ))}
       </select>
       <div>
         <input

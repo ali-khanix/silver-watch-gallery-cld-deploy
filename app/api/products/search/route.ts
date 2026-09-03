@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { normalizeImages } from "@/lib/normalize-images";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -18,5 +19,10 @@ export async function GET(req: Request) {
     take: 6,
   });
 
-  return NextResponse.json(products);
+  const results = products.map((p) => ({
+    ...p,
+    images: normalizeImages(p.images as any),
+  }));
+
+  return NextResponse.json(results);
 }

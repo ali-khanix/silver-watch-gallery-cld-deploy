@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CATEGORY_GROUP_VALUES } from "./category-groups";
 
 export const categoryFormSchema = z.object({
   name: z.string().min(1, "نام دسته بندی الزامی است"),
@@ -7,7 +8,7 @@ export const categoryFormSchema = z.object({
     .min(1, "اسلاگ الزامی است")
     .regex(/^[a-z0-9-]+$/, "اسلاگ فقط حروف انگلیسی، عدد و خط تیره"),
 
-  group: z.enum(["men", "women", "kids", "smart", "couple"]).optional(),
+  group: z.enum(CATEGORY_GROUP_VALUES).optional(),
 });
 
 export type CategoryFormInput = z.input<typeof categoryFormSchema>;

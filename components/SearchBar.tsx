@@ -12,7 +12,7 @@ type SearchResult = {
   slug: string;
   shortDescription: string | null;
   price: number;
-  images: Record<string, string>;
+  images: Record<string, string[]>;
   colors: string[];
 };
 
@@ -102,7 +102,7 @@ const SearchBar = ({ display }: { display: string }) => {
               >
                 <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-zinc-100">
                   <Image
-                    src={product.images[product.colors[0]] || ""}
+                    src={product.images?.[product.colors[0]]?.[0] || ""}
                     alt={product.name}
                     fill
                     className="object-cover"

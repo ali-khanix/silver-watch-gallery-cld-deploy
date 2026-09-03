@@ -38,6 +38,7 @@ const Categories = ({
   const kidsGroup = categories.filter((c) => c.group === "kids");
   const smartGroup = categories.filter((c) => c.group === "smart");
   const coupleGroup = categories.filter((c) => c.group === "couple");
+  const wallGroup = categories.filter((c) => c.group === "wall");
   const ungrouped = categories.filter((c) => !c.group);
 
   const groups = [
@@ -48,6 +49,7 @@ const Categories = ({
     ...(coupleGroup.length
       ? [{ title: "ست مردانه و زنانه", items: coupleGroup }]
       : []),
+    ...(wallGroup.length ? [{ title: "ساعت دیواری", items: wallGroup }] : []),
     ...(ungrouped.length ? [{ title: "سایر", items: ungrouped }] : []),
   ];
 

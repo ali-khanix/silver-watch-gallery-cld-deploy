@@ -60,6 +60,11 @@ const Navbar = async () => {
         </div>
       </div>
 
+      {/* MOBILE SEARCH */}
+      <div className="sm:hidden px-4 pb-4">
+        <SearchBar display="flex" />
+      </div>
+
       <div className="hidden sm:flex justify-between items-center sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-6xl mx-auto sm:gap-24 flex-row-reverse sm:flex-row ">
         <Categories categories={categories} brands={brands} />
       </div>
