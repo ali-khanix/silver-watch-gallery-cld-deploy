@@ -1,21 +1,66 @@
 "use client";
 
-import { UserButton } from "@clerk/nextjs";
-import { ShoppingBag } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { User as UserIcon, ShoppingBag, LogOut } from "lucide-react";
+import { useAuth } from "@/lib/AuthContext";
 
-const ProfileButton = () => {
+type Props = {
+  user: { phone: string; name: string | null };
+};
+
+const ProfileButton = ({ user }: Props) => {
   const router = useRouter();
+  const { logout } = useAuth();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onClickOutside = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
+
   return (
-    <UserButton>
-      <UserButton.MenuItems>
-        <UserButton.Action
-          label="مشاهده سفارش ها"
-          labelIcon={<ShoppingBag size={16} />}
-          onClick={() => router.push("/orders")}
-        />
-      </UserButton.MenuItems>
-    </UserButton>
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className="flex items-center gap-2 text-white text-sm"
+      >
+        <UserIcon size={20} />
+        <span>{user.name || user.phone}</span>
+      </button>
+
+      {open && (
+        <div className="absolute left-0 mt-2 w-48 bg-white text-zinc-800 rounded-lg shadow-lg border border-zinc-100 overflow-hidden z-50">
+          <button
+            onClick={() => {
+              setOpen(false);
+              router.push("/orders");
+            }}
+            className="w-full flex items-center gap-2 px-4 py-2 text-sm hover:bg-zinc-50 text-right"
+          >
+            <ShoppingBag size={16} />
+            مشاهده سفارش‌ها
+          </button>
+          <button
+            onClick={async () => {
+              setOpen(false);
+              await logout();
+              router.push("/");
+            }}
+            className="w-full flex items-center gap-2 px-4 py-2 text-sm hover:bg-zinc-50 text-right text-red-600"
+          >
+            <LogOut size={16} />
+            خروج از حساب
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 

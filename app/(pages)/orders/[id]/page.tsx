@@ -1,5 +1,5 @@
 import { notFound, redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
+import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 
@@ -9,10 +9,10 @@ type Props = {
 
 export default async function OrderDetailPage({ params }: Props) {
   const { id } = await params;
-  const { userId } = await auth();
+  const user = await getCurrentUser();
 
-  if (!userId) {
-    redirect("/sign-in");
+  if (!user) {
+    redirect("/login");
   }
 
   const order = await prisma.order.findUnique({
@@ -20,7 +20,7 @@ export default async function OrderDetailPage({ params }: Props) {
     include: { items: true },
   });
 
-  if (!order || order.userId !== userId) {
+  if (!order || order.userId !== user.id) {
     notFound();
   }
 

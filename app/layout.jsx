@@ -5,8 +5,7 @@ import { iranYekan } from "@/public/font/iran-yekan-web/fonts";
 import Footer from "@/components/Footer";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
-import { ClerkProvider } from "@clerk/nextjs";
-import { faIR } from "@clerk/localizations";
+import { AuthProvider } from "@/lib/AuthContext";
 
 export const metadata = {
   metadataBase: new URL("https://silverwatchgallery.com"),
@@ -46,7 +45,7 @@ export const dynamic = "force-dynamic";
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider localization={faIR}>
+    <AuthProvider>
       <html lang="fa" dir="rtl">
         <body className={`${iranYekan.className} antialiased bg-zinc-100`}>
           <Navbar />
@@ -58,6 +57,6 @@ export default function RootLayout({ children }) {
           <ToastContainer position="bottom-right" />
         </body>
       </html>
-    </ClerkProvider>
+    </AuthProvider>
   );
 }

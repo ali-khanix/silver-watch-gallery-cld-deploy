@@ -1,12 +1,11 @@
 import { prisma } from "@/lib/prisma";
-import { auth } from "@clerk/nextjs/server";
+import { getCurrentUser } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import { sendOrderNotificationEmail } from "@/lib/send-order-email";
 
 export async function POST(req: Request) {
-  const { userId } = await auth();
-
-  if (!userId) {
+  const user = await getCurrentUser();
+  if (!user) {
     return NextResponse.json(
       { error: "ابتدا وارد حساب کاربری شوید" },
       { status: 401 }
@@ -43,7 +42,7 @@ export async function POST(req: Request) {
 
   const order = await prisma.order.create({
     data: {
-      userId,
+      userId: user.id,
       name: shipping.name,
       email: shipping.email,
       phone: shipping.phone,

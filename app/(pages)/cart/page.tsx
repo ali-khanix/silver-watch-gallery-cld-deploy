@@ -7,11 +7,11 @@ import { Button } from "@/components/ui/button";
 import useCartStore from "@/stores/cartStore";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { useUser, SignInButton } from "@clerk/nextjs";
 import { useState } from "react";
+import { useAuth } from "@/lib/AuthContext";
+import Link from "next/link";
 
 const colorTranslations: Record<string, string> = {
   blue: "آبی",
@@ -27,7 +27,7 @@ const colorTranslations: Record<string, string> = {
 
 const CartPage = () => {
   const router = useRouter();
-  const { isSignedIn } = useUser();
+  const { user } = useAuth();
   const { cart, removeFromCart, clearCart } = useCartStore();
   const [submitting, setSubmitting] = useState(false);
 
@@ -230,7 +230,7 @@ const CartPage = () => {
               </div>
             </div>
 
-            {isSignedIn ? (
+            {user ? (
               <Button
                 type="submit"
                 form="checkout-form"
@@ -240,11 +240,11 @@ const CartPage = () => {
                 {submitting ? "در حال ثبت..." : "ثبت سفارش و ادامه به پرداخت"}
               </Button>
             ) : (
-              <SignInButton>
+              <Link href="/login">
                 <Button type="button" className="w-full">
                   برای ادامه وارد حساب کاربری شوید
                 </Button>
-              </SignInButton>
+              </Link>
             )}
           </div>
         </div>

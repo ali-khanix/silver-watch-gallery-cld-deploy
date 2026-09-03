@@ -1,14 +1,11 @@
 import Image from "next/image";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
-import { User } from "lucide-react";
 
 import Categories from "./Categories";
 import ShoppingCartIcon from "./ShoppingCartIcon";
 import MobileNav from "./MobileNav";
-import { SignedIn, SignedOut, SignUpButton } from "@clerk/nextjs";
-import { Button } from "./ui/button";
-import ProfileButton from "./ProfileButton";
+import AuthButtons from "./AuthButtons";
 import { prisma } from "@/lib/prisma";
 
 const Navbar = async () => {
@@ -39,18 +36,7 @@ const Navbar = async () => {
         {/* LOGIN AND CART BUTTONS */}
         <div className="hidden sm:flex items-center justify-end sm:w-4/12 gap-4">
           <ShoppingCartIcon />
-
-          <SignedOut>
-            <SignUpButton>
-              <Button className="bg-transparent text-[12px]">
-                <User size={64} />
-                ورود یا ثبت نام
-              </Button>
-            </SignUpButton>
-          </SignedOut>
-          <SignedIn>
-            <ProfileButton />
-          </SignedIn>
+          <AuthButtons />
         </div>
 
         {/* MOBILE NAV */}
