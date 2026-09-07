@@ -2,12 +2,19 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { toast } from "react-toastify";
 import useCartStore from "@/stores/cartStore";
 import { ProductType } from "@/lib/schema";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Pencil } from "lucide-react";
 
-const ProductDetail = ({ product }: { product: ProductType }) => {
+const ProductDetail = ({
+  product,
+  isAdmin = false,
+}: {
+  product: ProductType;
+  isAdmin?: boolean;
+}) => {
   const [color, setColor] = useState(product.colors[0]);
   const [activeImage, setActiveImage] = useState(0);
   const { addToCart } = useCartStore();
@@ -80,9 +87,20 @@ const ProductDetail = ({ product }: { product: ProductType }) => {
 
         {/* DETAILS */}
         <div className="flex flex-col justify-center">
-          <p className="text-xs tracking-wide text-zinc-500 mb-3">
-            {product.category.name}
-          </p>
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-xs tracking-wide text-zinc-500">
+              {product.category.name}
+            </p>
+            {isAdmin && (
+              <Link
+                href={`/admin/products/${product.id}`}
+                className="flex items-center gap-1 text-xs bg-zinc-950 text-zinc-100 rounded-lg px-3 py-2 hover:bg-zinc-700 transition-colors"
+              >
+                <Pencil size={14} />
+                ویرایش محصول
+              </Link>
+            )}
+          </div>
 
           <h1 className="text-3xl sm:text-4xl font-bold text-zinc-900 mb-2 leading-tight">
             {product.name}

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
+import { cookies } from "next/headers";
 
 import Categories from "./Categories";
 import ShoppingCartIcon from "./ShoppingCartIcon";
@@ -9,10 +10,13 @@ import AuthButtons from "./AuthButtons";
 import { prisma } from "@/lib/prisma";
 
 const Navbar = async () => {
-  const [categories, brands] = await Promise.all([
+  const [categories, brands, cookieStore] = await Promise.all([
     prisma.category.findMany({ orderBy: { name: "asc" } }),
     prisma.brand.findMany({ orderBy: { name: "asc" } }),
+    cookies(),
   ]);
+
+  const isAdmin = cookieStore.get("admin_auth")?.value === "true";
 
   return (
     <nav className=" bg-zinc-950 text-white sticky top-0 right-0 z-50 w-full">
@@ -30,7 +34,7 @@ const Navbar = async () => {
 
         {/* SEARCH INPUT AND CATEGORIES */}
         <div className="w-5/12 flex flex-col gap-4 mx-4">
-          <SearchBar display={"hidden"} />
+          <SearchBar display={"hidden"} isAdmin={isAdmin} />
         </div>
 
         {/* LOGIN AND CART BUTTONS */}
@@ -48,7 +52,7 @@ const Navbar = async () => {
 
       {/* MOBILE SEARCH */}
       <div className="sm:hidden px-4 pb-4">
-        <SearchBar display="flex" />
+        <SearchBar display="flex" isAdmin={isAdmin} />
       </div>
 
       <div className="hidden sm:flex justify-between items-center sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-6xl mx-auto sm:gap-24 flex-row-reverse sm:flex-row ">

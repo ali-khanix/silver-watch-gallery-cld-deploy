@@ -49,16 +49,6 @@ const ProductsFilterSidebar = () => {
         <label className="flex items-center gap-3 text-base cursor-pointer">
           <input
             type="checkbox"
-            checked={searchParams.get("inStock") === "true"}
-            onChange={() => toggleBoolean("inStock")}
-            className="w-5 h-5 accent-zinc-950 cursor-pointer"
-          />
-          محصولات موجود
-        </label>
-
-        <label className="flex items-center gap-3 text-base cursor-pointer">
-          <input
-            type="checkbox"
             checked={searchParams.get("discounted") === "true"}
             onChange={() => toggleBoolean("discounted")}
             className="w-5 h-5 accent-zinc-950 cursor-pointer"

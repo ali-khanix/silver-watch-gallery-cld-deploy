@@ -9,7 +9,10 @@ const ProductsList = async ({
   discountedOnly?: boolean;
 }) => {
   const rows = await prisma.product.findMany({
-    where: discountedOnly ? { offer: { not: null } } : undefined,
+    where: {
+      inStock: true,
+      ...(discountedOnly ? { offer: { not: null } } : {}),
+    },
     include: { category: true, brand: true },
     orderBy: { createdAt: "desc" },
     take: 10,

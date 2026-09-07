@@ -12,7 +12,6 @@ type Props = {
     category?: string;
     gender?: string;
     discounted?: string;
-    inStock?: string;
     minPrice?: string;
     maxPrice?: string;
     sort?: string;
@@ -21,7 +20,7 @@ type Props = {
 
 export default async function BrandPage({ params, searchParams }: Props) {
   const { slug } = await params;
-  const { category, gender, discounted, inStock, minPrice, maxPrice, sort } =
+  const { category, gender, discounted, minPrice, maxPrice, sort } =
     await searchParams;
 
   const brand = await prisma.brand.findUnique({ where: { slug } });
@@ -58,7 +57,6 @@ export default async function BrandPage({ params, searchParams }: Props) {
             categorySlug={category}
             gender={gender}
             discountedOnly={discounted === "true"}
-            inStockOnly={inStock === "true"}
             minPrice={minPrice ? Number(minPrice) : undefined}
             maxPrice={maxPrice ? Number(maxPrice) : undefined}
             sort={sort}

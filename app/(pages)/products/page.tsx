@@ -8,7 +8,6 @@ type Props = {
     category?: string;
     gender?: string;
     discounted?: string;
-    inStock?: string;
     minPrice?: string;
     maxPrice?: string;
     sort?: string;
@@ -16,7 +15,7 @@ type Props = {
 };
 
 export default async function ProductsPage({ searchParams }: Props) {
-  const { category, gender, discounted, inStock, minPrice, maxPrice, sort } =
+  const { category, gender, discounted, minPrice, maxPrice, sort } =
     await searchParams;
 
   return (
@@ -40,7 +39,6 @@ export default async function ProductsPage({ searchParams }: Props) {
             categorySlug={category}
             gender={gender}
             discountedOnly={discounted === "true"}
-            inStockOnly={inStock === "true"}
             minPrice={minPrice ? Number(minPrice) : undefined}
             maxPrice={maxPrice ? Number(maxPrice) : undefined}
             sort={sort}

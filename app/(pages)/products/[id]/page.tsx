@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { ProductType } from "@/lib/schema";
 import ProductDetail from "@/components/ProductDetail";
@@ -74,14 +75,19 @@ export async function generateMetadata({ params }: Props) {
 export default async function ProductPage({ params }: Props) {
   const { id: slug } = await params;
 
-  const row = await prisma.product.findUnique({
-    where: { slug },
-    include: { category: true, brand: true },
-  });
+  const [row, cookieStore] = await Promise.all([
+    prisma.product.findUnique({
+      where: { slug },
+      include: { category: true, brand: true },
+    }),
+    cookies(),
+  ]);
 
   if (!row) {
     notFound();
   }
+
+  const isAdmin = cookieStore.get("admin_auth")?.value === "true";
 
   const product = {
     ...(row as unknown as ProductType),
@@ -99,7 +105,7 @@ export default async function ProductPage({ params }: Props) {
           __html: JSON.stringify(jsonLd),
         }}
       />
-      <ProductDetail product={product} />
+      <ProductDetail product={product} isAdmin={isAdmin} />
     </div>
   );
 }

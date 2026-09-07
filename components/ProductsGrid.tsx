@@ -9,7 +9,6 @@ const ProductsGrid = async ({
   brandSlug,
   gender,
   discountedOnly,
-  inStockOnly,
   minPrice,
   maxPrice,
   sort,
@@ -18,7 +17,6 @@ const ProductsGrid = async ({
   brandSlug?: string;
   gender?: string;
   discountedOnly?: boolean;
-  inStockOnly?: boolean;
   minPrice?: number;
   maxPrice?: number;
   sort?: string;
@@ -26,10 +24,10 @@ const ProductsGrid = async ({
   const genders = gender ? gender.split(",").filter(Boolean) : [];
 
   const where: Prisma.ProductWhereInput = {
+    inStock: true,
     ...(categorySlug ? { category: { slug: categorySlug } } : {}),
     ...(brandSlug ? { brand: { slug: brandSlug } } : {}),
     ...(discountedOnly ? { offer: { not: null } } : {}),
-    ...(inStockOnly ? { inStock: true } : {}),
     ...(minPrice !== undefined || maxPrice !== undefined
       ? {
           price: {

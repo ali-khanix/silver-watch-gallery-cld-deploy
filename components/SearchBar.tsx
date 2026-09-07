@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchIcon, Loader2 } from "lucide-react";
+import { SearchIcon, Loader2, Pencil } from "lucide-react";
 import { Input } from "./ui/input";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,9 +14,16 @@ type SearchResult = {
   price: number;
   images: Record<string, string[]>;
   colors: string[];
+  inStock: boolean;
 };
 
-const SearchBar = ({ display }: { display: string }) => {
+const SearchBar = ({
+  display,
+  isAdmin = false,
+}: {
+  display: string;
+  isAdmin?: boolean;
+}) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
@@ -94,29 +101,47 @@ const SearchBar = ({ display }: { display: string }) => {
             </p>
           ) : (
             results.map((product) => (
-              <Link
+              <div
                 key={product.id}
-                href={`/products/${product.slug}`}
-                onClick={() => setOpen(false)}
                 className="flex items-center gap-3 p-3 hover:bg-zinc-50 transition-colors border-b last:border-b-0 border-zinc-100"
               >
-                <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-zinc-100">
-                  <Image
-                    src={product.images?.[product.colors[0]]?.[0] || ""}
-                    alt={product.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="flex flex-col min-w-0">
-                  <span className="text-sm font-medium text-zinc-900 line-clamp-1">
-                    {product.name}
-                  </span>
-                  <span className="text-xs text-zinc-500">
-                    {product.price.toLocaleString()} تومان
-                  </span>
-                </div>
-              </Link>
+                <Link
+                  href={`/products/${product.slug}`}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 flex-1 min-w-0"
+                >
+                  <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-zinc-100">
+                    <Image
+                      src={product.images?.[product.colors[0]]?.[0] || ""}
+                      alt={product.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-sm font-medium text-zinc-900 line-clamp-1">
+                      {product.name}
+                    </span>
+                    <span className="text-xs text-zinc-500 flex items-center gap-2">
+                      {product.price.toLocaleString()} تومان
+                      {isAdmin && !product.inStock && (
+                        <span className="text-red-500">ناموجود</span>
+                      )}
+                    </span>
+                  </div>
+                </Link>
+
+                {isAdmin && (
+                  <Link
+                    href={`/admin/products/${product.id}`}
+                    onClick={() => setOpen(false)}
+                    className="shrink-0 flex items-center gap-1 text-xs bg-zinc-100 text-zinc-700 rounded-lg px-2 py-2 hover:bg-zinc-200 transition-colors"
+                  >
+                    <Pencil size={14} />
+                    ویرایش
+                  </Link>
+                )}
+              </div>
             ))
           )}
         </div>
