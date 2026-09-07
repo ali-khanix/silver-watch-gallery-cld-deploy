@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import { ORDER_STATUS_GROUPS } from "@/lib/order-status";
+import AdminUserActions from "@/components/AdminUserActions";
 
 export default async function AdminUsersPage() {
   const users = await prisma.user.findMany({
@@ -50,15 +51,22 @@ export default async function AdminUsersPage() {
 
               <div className="flex items-center gap-2 text-xs">
                 <span className="px-2 py-1 rounded-full bg-yellow-100 text-yellow-700">
-                  {countIn(ORDER_STATUS_GROUPS.inProgress, user.orders)} در حال انجام
+                  {countIn(ORDER_STATUS_GROUPS.inProgress, user.orders)} در حال
+                  انجام
                 </span>
                 <span className="px-2 py-1 rounded-full bg-blue-100 text-blue-700">
-                  {countIn(ORDER_STATUS_GROUPS.delivered, user.orders)} تحویل شده
+                  {countIn(ORDER_STATUS_GROUPS.delivered, user.orders)} تحویل
+                  شده
                 </span>
                 <span className="px-2 py-1 rounded-full bg-orange-100 text-orange-700">
                   {countIn(ORDER_STATUS_GROUPS.returned, user.orders)} مرجوع شده
                 </span>
               </div>
+
+              <AdminUserActions
+                userId={user.id}
+                orderCount={user.orders.length}
+              />
             </div>
           ))}
         </div>
