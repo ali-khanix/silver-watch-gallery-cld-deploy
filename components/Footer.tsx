@@ -158,9 +158,14 @@ const Footer = async () => {
           </div>
 
           <div>
-            <Link href={"https://enamad.ir"}>
+            <Link
+              href="https://trustseal.enamad.ir/?id=4515368&Code=ZjrDbPipbHtMZFLHhU7m9MR6oCVu6Mbo"
+              referrerPolicy="origin"
+              target="_blank"
+            >
               <Image
-                src={"/e-namad-logo.webp"}
+                referrerPolicy="origin"
+                src="https://trustseal.enamad.ir/logo.aspx?id=4515368&Code=ZjrDbPipbHtMZFLHhU7m9MR6oCVu6Mbo"
                 width={140}
                 height={140}
                 alt="logo"

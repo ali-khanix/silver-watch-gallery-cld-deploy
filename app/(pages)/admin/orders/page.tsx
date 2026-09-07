@@ -1,5 +1,14 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { ORDER_STATUS_LABELS, OrderStatus } from "@/lib/order-status";
+
+const STATUS_STYLES: Record<OrderStatus, string> = {
+  pending: "bg-yellow-100 text-yellow-700",
+  accepted: "bg-green-100 text-green-700",
+  delivered: "bg-blue-100 text-blue-700",
+  returned: "bg-orange-100 text-orange-700",
+  refused: "bg-red-100 text-red-700",
+};
 
 export default async function AdminOrdersPage() {
   const orders = await prisma.order.findMany({
@@ -31,18 +40,12 @@ export default async function AdminOrdersPage() {
               <div className="flex items-center gap-3">
                 <span
                   className={`text-xs px-2 py-1 rounded-full ${
-                    order.status === "accepted"
-                      ? "bg-green-100 text-green-700"
-                      : order.status === "refused"
-                        ? "bg-red-100 text-red-700"
-                        : "bg-yellow-100 text-yellow-700"
+                    STATUS_STYLES[order.status as OrderStatus] ??
+                    "bg-yellow-100 text-yellow-700"
                   }`}
                 >
-                  {order.status === "accepted"
-                    ? "تایید شده"
-                    : order.status === "refused"
-                      ? "رد شده"
-                      : "در انتظار بررسی"}
+                  {ORDER_STATUS_LABELS[order.status as OrderStatus] ??
+                    order.status}
                 </span>
                 <span className="text-sm font-semibold">
                   {order.total.toLocaleString()} تومان

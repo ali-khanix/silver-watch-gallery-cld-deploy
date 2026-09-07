@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth";
 import { NextResponse } from "next/server";
-import { sendOrderNotificationEmail } from "@/lib/send-order-email";
 
 export async function POST(req: Request) {
   const user = await getCurrentUser();
@@ -64,17 +63,6 @@ export async function POST(req: Request) {
       },
     },
     include: { items: true },
-  });
-
-  await sendOrderNotificationEmail({
-    orderId: order.id,
-    name: order.name,
-    phone: order.phone,
-    email: order.email,
-    city: order.city,
-    address: order.address,
-    total: order.total,
-    items: order.items,
   });
 
   return NextResponse.json({ orderId: order.id }, { status: 201 });

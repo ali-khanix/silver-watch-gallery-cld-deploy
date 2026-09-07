@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { ALL_ORDER_STATUSES } from "@/lib/order-status";
 
 export async function PATCH(
   req: Request,
@@ -8,8 +9,7 @@ export async function PATCH(
   const { id } = await params;
   const { status } = await req.json();
 
-  const allowedStatuses = ["pending", "accepted", "refused"];
-  if (!allowedStatuses.includes(status)) {
+  if (!ALL_ORDER_STATUSES.includes(status)) {
     return NextResponse.json({ error: "وضعیت نامعتبر است" }, { status: 400 });
   }
 

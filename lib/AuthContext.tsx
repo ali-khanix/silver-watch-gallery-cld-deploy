@@ -8,7 +8,12 @@ import {
   ReactNode,
 } from "react";
 
-type AuthUser = { id: string; phone: string; name: string | null } | null;
+type AuthUser = {
+  id: string;
+  phone: string;
+  name: string | null;
+  image: string | null;
+} | null;
 
 type AuthContextType = {
   user: AuthUser;

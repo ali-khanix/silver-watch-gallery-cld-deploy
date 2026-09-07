@@ -57,6 +57,24 @@ const AdminOrderActions = ({
           تایید سفارش
         </button>
       )}
+      {currentStatus !== "delivered" && (
+        <button
+          onClick={() => updateStatus("delivered")}
+          disabled={loading}
+          className="text-sm bg-blue-100 text-blue-700 rounded-lg px-3 py-2 hover:bg-blue-200 transition-colors disabled:opacity-50"
+        >
+          تحویل داده شد
+        </button>
+      )}
+      {currentStatus !== "returned" && (
+        <button
+          onClick={() => updateStatus("returned")}
+          disabled={loading}
+          className="text-sm bg-orange-100 text-orange-700 rounded-lg px-3 py-2 hover:bg-orange-200 transition-colors disabled:opacity-50"
+        >
+          مرجوع شد
+        </button>
+      )}
       {currentStatus !== "refused" && (
         <button
           onClick={() => updateStatus("refused")}

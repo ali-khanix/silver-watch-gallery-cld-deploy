@@ -30,9 +30,14 @@ export default async function AdminPage() {
     >
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">پنل مدیریت</h1>
-        <Link href="/admin/orders" className="text-sm underline">
-          سفارش ها
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link href="/admin/orders" className="text-sm underline">
+            سفارش ها
+          </Link>
+          <Link href="/admin/users" className="text-sm underline">
+            کاربران
+          </Link>
+        </div>
         <AdminLogoutButton />
       </div>
 

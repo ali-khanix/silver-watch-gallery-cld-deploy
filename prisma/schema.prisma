@@ -71,6 +71,7 @@ model Banner {
 model Order {
   id        String      @id @default(cuid())
   userId    String
+  user      User        @relation(fields: [userId], references: [id])
   status    String      @default("pending")
   name      String
   email     String
@@ -101,8 +102,10 @@ model User {
   id        String    @id @default(cuid())
   phone     String    @unique
   name      String?
+  image     String?
   createdAt DateTime  @default(now())
   sessions  Session[]
+  orders    Order[]
 }
 
 model Session {
