@@ -13,10 +13,19 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 
-import { MenuIcon, ChevronDown, Watch } from "lucide-react";
+import {
+  MenuIcon,
+  ChevronDown,
+  Watch,
+  User as UserIcon,
+  ShoppingBag,
+  LogOut,
+} from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CategoryNav } from "@/lib/category-type";
+import { useAuth } from "@/lib/AuthContext";
 
 type Brand = { id: string; name: string; slug: string };
 
@@ -28,6 +37,8 @@ const MobileNav = ({
   brands: Brand[];
 }) => {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const { user, loading, logout } = useAuth();
 
   const menGroup = categories.filter((c) => c.group === "men");
   const womenGroup = categories.filter((c) => c.group === "women");
@@ -64,12 +75,59 @@ const MobileNav = ({
         </SheetHeader>
 
         <ul className="flex flex-col gap-4 mt-4 flex-1 min-h-0 overflow-y-auto pb-8">
+          {/* AUTH */}
+          <div className="mt-14 pb-4 border-b border-zinc-300">
+            {!loading &&
+              (user ? (
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-2 text-zinc-900 font-medium">
+                    <UserIcon size={18} />
+                    {user.name || user.phone}
+                  </div>
+                  <Link
+                    href="/user"
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-2 text-sm text-zinc-700 hover:text-zinc-900"
+                  >
+                    <UserIcon size={16} />
+                    پروفایل من
+                  </Link>
+                  <Link
+                    href="/orders"
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-2 text-sm text-zinc-700 hover:text-zinc-900"
+                  >
+                    <ShoppingBag size={16} />
+                    مشاهده سفارش‌ها
+                  </Link>
+                  <button
+                    onClick={async () => {
+                      setOpen(false);
+                      await logout();
+                      router.push("/");
+                    }}
+                    className="flex items-center gap-2 text-sm text-red-600 text-right"
+                  >
+                    <LogOut size={16} />
+                    خروج از حساب
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  href="/login"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-2 text-zinc-900 font-medium"
+                >
+                  <UserIcon size={18} />
+                  ورود یا ثبت نام
+                </Link>
+              ))}
+          </div>
+
           {/* CATEGORIES */}
           {groups.length > 0 && (
             <Collapsible>
-              <CollapsibleTrigger
-                className={"mt-14 flex justify-between w-full"}
-              >
+              <CollapsibleTrigger className={"flex justify-between w-full"}>
                 <div className="flex flex-row gap-2">
                   <Watch className="text-zinc-700" />
                   دسته بندی ها
