@@ -61,6 +61,7 @@ export async function POST(req: Request) {
           image: item.images?.[item.selectedColor]?.[0] ?? null,
         })),
       },
+      postalCode: shipping.postalCode,
     },
     include: { items: true },
   });

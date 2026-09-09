@@ -51,6 +51,7 @@ export const shippingFormSchema = z.object({
 
   address: z.string().min(1, "آدرس الزامیست"),
   city: z.string().min(1, "اسم شهر الزامیست"),
+  postalCode: z.string().regex(/^\d{10}$/, "کد پستی باید ۱۰ رقم باشد"),
 });
 
 export type ShippingFormInputs = z.infer<typeof shippingFormSchema>;

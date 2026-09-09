@@ -41,6 +41,9 @@ export default async function AdminOrderDetailPage({ params }: Props) {
             <span className="text-zinc-500">شهر:</span> {order.city}
           </p>
           <p>
+            <span className="text-zinc-500">کد پستی:</span> {order.postalCode}
+          </p>
+          <p>
             <span className="text-zinc-500">آدرس:</span> {order.address}
           </p>
         </div>

@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
+import PayButton from "@/components/PayButton";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -27,17 +28,32 @@ export default async function OrderDetailPage({ params }: Props) {
   return (
     <div dir="rtl" className="max-w-2xl mx-auto py-10 px-4">
       <h1 className="text-xl font-bold mb-2">سفارش ثبت شد</h1>
-      <p className="text-zinc-500 text-sm mb-8">
-        شماره سفارش: {order.id} — در انتظار اتصال به درگاه پرداخت بانک
-      </p>
+      <p className="text-zinc-500 text-sm mb-4">شماره سفارش: {order.id}</p>
 
-      {/*
-        BANK GATEWAY INTEGRATION POINT:
-        Once you have your bank's payment API, this is where you'd either
-        auto-redirect the user to the bank's hosted payment page (e.g. via
-        a server action right after order creation), or show a "پرداخت" button
-        here that calls your bank API route and redirects.
-      */}
+      {order.paymentStatus === "paid" && (
+        <div className="bg-green-50 text-green-700 rounded-xl p-4 mb-8 text-sm">
+          <p className="font-medium">پرداخت با موفقیت انجام شد.</p>
+          {order.paymentRefId && (
+            <p className="mt-1">کد پیگیری: {order.paymentRefId}</p>
+          )}
+        </div>
+      )}
+
+      {order.paymentStatus === "failed" && (
+        <div className="bg-red-50 text-red-600 rounded-xl p-4 mb-8 text-sm flex flex-col gap-3">
+          <p>پرداخت ناموفق بود یا لغو شد. می‌توانید دوباره تلاش کنید.</p>
+          <PayButton orderId={order.id} />
+        </div>
+      )}
+
+      {order.paymentStatus === "unpaid" && (
+        <div className="bg-zinc-100 rounded-xl p-4 mb-8 flex flex-col gap-3">
+          <p className="text-sm text-zinc-500">
+            سفارش ثبت شد، برای تکمیل خرید باید مبلغ را پرداخت کنید.
+          </p>
+          <PayButton orderId={order.id} />
+        </div>
+      )}
 
       <div className="flex flex-col gap-3 mb-8">
         {order.items.map((item) => (

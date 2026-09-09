@@ -54,8 +54,16 @@ const CartPage = () => {
       });
 
       if (!res.ok) {
-        const { error } = await res.json();
-        toast.error(error || "خطا در ثبت سفارش");
+        let error = "خطا در ثبت سفارش";
+
+        try {
+          const data = await res.json();
+          error = data.error || error;
+        } catch {
+          // Response wasn't JSON
+        }
+
+        toast.error(error);
         return;
       }
 
@@ -180,6 +188,20 @@ const CartPage = () => {
                 />
                 {errors.city && (
                   <p className="text-red-500 text-xs">{errors.city.message}</p>
+                )}
+              </div>
+              <div>
+                <input
+                  placeholder="کد پستی"
+                  inputMode="numeric"
+                  maxLength={10}
+                  className="border rounded-md p-2 w-full"
+                  {...register("postalCode")}
+                />
+                {errors.postalCode && (
+                  <p className="text-red-500 text-xs">
+                    {errors.postalCode.message}
+                  </p>
                 )}
               </div>
               <div className="sm:col-span-2">

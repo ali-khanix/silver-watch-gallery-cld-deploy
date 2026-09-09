@@ -69,21 +69,30 @@ model Banner {
 }
 
 model Order {
-  id        String      @id @default(cuid())
-  userId    String
-  user      User        @relation(fields: [userId], references: [id])
-  status    String      @default("pending")
-  name      String
-  email     String
-  phone     String
-  address   String
-  city      String
-  subtotal  Int
-  discount  Int
-  shipping  Int
-  total     Int
-  createdAt DateTime    @default(now())
-  items     OrderItem[]
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  status String @default("pending")
+
+  // ZarinPal payment tracking (separate from the fulfillment `status` above).
+  // paymentStatus: "unpaid" | "paid" | "failed"
+  paymentStatus    String    @default("unpaid")
+  paymentAuthority String?   @unique
+  paymentRefId     Int?
+  paidAt           DateTime?
+
+  name       String
+  email      String
+  phone      String
+  address    String
+  city       String
+  postalCode String
+  subtotal   Int
+  discount   Int
+  shipping   Int
+  total      Int
+  createdAt  DateTime    @default(now())
+  items      OrderItem[]
 }
 
 model OrderItem {

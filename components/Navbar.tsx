@@ -1,6 +1,5 @@
 import Image from "next/image";
 import SearchBar from "./SearchBar";
-import MobileSearchButton from "./MobileSearchButton";
 import Link from "next/link";
 import { cookies } from "next/headers";
 
@@ -21,29 +20,20 @@ const Navbar = async () => {
 
   return (
     <nav className=" bg-zinc-950 text-white sticky top-0 right-0 z-50 w-full">
-      <div className="px-4 sm:px-0 py-2 sm:py-4 flex justify-between items-center sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-6xl mx-auto sm:gap-24 flex-row-reverse sm:flex-row">
+      <div className="px-4 sm:px-0 py-4 flex justify-between items-center sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-6xl mx-auto sm:gap-24 flex-row-reverse sm:flex-row">
         {/* LOGO */}
         <Link href={"/"} className="sm:mx-auto sm:w-3/12 sm:translate-y-3">
-          {/* Mobile logo */}
-          <Image
-            src={`/logo-mobile.png`}
-            width={40}
-            height={42}
-            alt="لوگو گالری ساعت سیلور"
-            className="sm:hidden w-10 h-auto"
-          />
-          {/* Desktop logo */}
           <Image
             src={`/logo.png`}
             width={100}
             height={105}
             alt="لوگو گالری ساعت سیلور"
-            className="hidden sm:block max-w-none"
+            className="max-w-none"
           />
         </Link>
 
         {/* SEARCH INPUT AND CATEGORIES */}
-        <div className="hidden sm:flex sm:flex-col sm:w-5/12 sm:gap-4 sm:mx-4">
+        <div className="w-5/12 flex flex-col gap-4 mx-4">
           <SearchBar display={"hidden"} isAdmin={isAdmin} />
         </div>
 
@@ -54,11 +44,15 @@ const Navbar = async () => {
         </div>
 
         {/* MOBILE NAV */}
-        <div className="sm:hidden flex flex-row gap-5 justify-center items-center">
+        <div className="sm:hidden flex flex-row gap-7.5 justify-center items-center">
           <MobileNav categories={categories} brands={brands} />
-          <MobileSearchButton isAdmin={isAdmin} />
-          <ShoppingCartIcon size={26} className="text-gray-300" />
+          <ShoppingCartIcon size={32} className="text-gray-300" />
         </div>
+      </div>
+
+      {/* MOBILE SEARCH */}
+      <div className="sm:hidden px-4 pb-4">
+        <SearchBar display="flex" isAdmin={isAdmin} />
       </div>
 
       <div className="hidden sm:flex justify-between items-center sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-6xl mx-auto sm:gap-24 flex-row-reverse sm:flex-row ">
