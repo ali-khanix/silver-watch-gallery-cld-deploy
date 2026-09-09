@@ -20,9 +20,11 @@ type SearchResult = {
 const SearchBar = ({
   display,
   isAdmin = false,
+  autoFocus = false,
 }: {
   display: string;
   isAdmin?: boolean;
+  autoFocus?: boolean;
 }) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -80,6 +82,7 @@ const SearchBar = ({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => query.trim() && setOpen(true)}
+          autoFocus={autoFocus}
           className="pr-10 border-zinc-500 border py-6 rounded-2xl"
         />
         {loading && (
