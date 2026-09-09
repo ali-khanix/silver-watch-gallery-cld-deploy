@@ -10,23 +10,17 @@ const MobileSearchButton = ({ isAdmin = false }: { isAdmin?: boolean }) => {
   return (
     <>
       <button
-        onClick={() => setOpen(true)}
-        aria-label="جستجو"
-        className="sm:hidden"
+        type="button"
+        onClick={() => setOpen((prev) => !prev)}
+        aria-label={open ? "بستن جستجو" : "جستجو"}
+        className="text-gray-300"
       >
-        <SearchIcon size={28} className="text-gray-300" />
+        {open ? <X size={32} /> : <SearchIcon size={32} />}
       </button>
 
       {open && (
-        <div dir="rtl" className="fixed inset-0 z-60 bg-zinc-950 sm:hidden">
-          <div className="flex items-center gap-3 px-4 py-4">
-            <div className="flex-1">
-              <SearchBar display="flex" isAdmin={isAdmin} autoFocus />
-            </div>
-            <button onClick={() => setOpen(false)} aria-label="بستن جستجو">
-              <X size={28} className="text-gray-300" />
-            </button>
-          </div>
+        <div className="absolute top-full left-0 right-0 bg-zinc-950 px-4 pb-4 z-40">
+          <SearchBar display="flex" isAdmin={isAdmin} autoFocus />
         </div>
       )}
     </>

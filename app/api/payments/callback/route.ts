@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { zarinpal } from "@/lib/zarinpal";
+import { zarinpal, getBaseUrl } from "@/lib/zarinpal";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   const status = searchParams.get("Status");
 
   if (!authority) {
-    return NextResponse.redirect(new URL("/cart", req.url));
+    return NextResponse.redirect(new URL("/cart", getBaseUrl()));
   }
 
   const order = await prisma.order.findUnique({
@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   });
 
   if (!order) {
-    return NextResponse.redirect(new URL("/cart", req.url));
+    return NextResponse.redirect(new URL("/cart", getBaseUrl()));
   }
 
   // User cancelled or the bank rejected the transaction before it completed.
@@ -25,13 +25,13 @@ export async function GET(req: NextRequest) {
       where: { id: order.id },
       data: { paymentStatus: "failed" },
     });
-    return NextResponse.redirect(new URL(`/orders/${order.id}`, req.url));
+    return NextResponse.redirect(new URL(`/orders/${order.id}`, getBaseUrl()));
   }
 
   // Already verified previously (e.g. user hit back/refresh on this URL) —
   // don't verify twice, just show the order.
   if (order.paymentStatus === "paid") {
-    return NextResponse.redirect(new URL(`/orders/${order.id}`, req.url));
+    return NextResponse.redirect(new URL(`/orders/${order.id}`, getBaseUrl()));
   }
 
   try {
@@ -65,5 +65,5 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  return NextResponse.redirect(new URL(`/orders/${order.id}`, req.url));
+  return NextResponse.redirect(new URL(`/orders/${order.id}`, getBaseUrl()));
 }

@@ -8,6 +8,7 @@ import ShoppingCartIcon from "./ShoppingCartIcon";
 import MobileNav from "./MobileNav";
 import AuthButtons from "./AuthButtons";
 import { prisma } from "@/lib/prisma";
+import MobileSearchButton from "./MobileSearchButton";
 
 const Navbar = async () => {
   const [categories, brands, cookieStore] = await Promise.all([
@@ -28,7 +29,14 @@ const Navbar = async () => {
             width={100}
             height={105}
             alt="لوگو گالری ساعت سیلور"
-            className="max-w-none"
+            className="max-w-none hidden sm:block"
+          />
+          <Image
+            src={`/logo-mobile.png`}
+            width={44}
+            height={51}
+            alt="لوگو گالری ساعت سیلور"
+            className="h-10 w-auto sm:hidden"
           />
         </Link>
 
@@ -46,13 +54,9 @@ const Navbar = async () => {
         {/* MOBILE NAV */}
         <div className="sm:hidden flex flex-row gap-7.5 justify-center items-center">
           <MobileNav categories={categories} brands={brands} />
+          <MobileSearchButton isAdmin={isAdmin} />
           <ShoppingCartIcon size={32} className="text-gray-300" />
         </div>
-      </div>
-
-      {/* MOBILE SEARCH */}
-      <div className="sm:hidden px-4 pb-4">
-        <SearchBar display="flex" isAdmin={isAdmin} />
       </div>
 
       <div className="hidden sm:flex justify-between items-center sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-6xl mx-auto sm:gap-24 flex-row-reverse sm:flex-row ">
