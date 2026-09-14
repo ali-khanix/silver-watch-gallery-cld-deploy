@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     0
   );
   const discount = Math.round(subtotal * 0.1);
-  const shippingCost = 100000;
+  const shippingCost = 0;
   const total = subtotal - discount + shippingCost;
 
   const order = await prisma.order.create({

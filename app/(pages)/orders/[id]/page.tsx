@@ -86,14 +86,18 @@ export default async function OrderDetailPage({ params }: Props) {
           <span className="text-zinc-500">جمع خرید</span>
           <span>{order.subtotal.toLocaleString()} تومان</span>
         </div>
-        <div className="flex justify-between">
-          <span className="text-zinc-500">تخفیف</span>
-          <span>{order.discount.toLocaleString()} تومان</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="text-zinc-500">هزینه ارسال</span>
-          <span>{order.shipping.toLocaleString()} تومان</span>
-        </div>
+        {order.discount > 0 && (
+          <div className="flex justify-between">
+            <span className="text-zinc-500">تخفیف</span>
+            <span>-{order.discount.toLocaleString()} تومان</span>
+          </div>
+        )}
+        {order.shipping > 0 && (
+          <div className="flex justify-between">
+            <span className="text-zinc-500">هزینه ارسال</span>
+            <span>{order.shipping.toLocaleString()} تومان</span>
+          </div>
+        )}
         <hr className="border-zinc-200" />
         <div className="flex justify-between font-semibold">
           <span>جمع کل</span>
