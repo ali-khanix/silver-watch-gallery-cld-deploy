@@ -40,9 +40,8 @@ const CartPage = () => {
   });
 
   const subtotal = cart.reduce((acc, cur) => acc + cur.price * cur.quantity, 0);
-  const discount = Math.round(subtotal * 0.1);
-  const shippingCost = 100000;
-  const total = subtotal - discount + shippingCost;
+
+  const total = subtotal;
 
   const onSubmit = async (values: ShippingFormInputs) => {
     setSubmitting(true);
@@ -231,18 +230,7 @@ const CartPage = () => {
                   {subtotal.toLocaleString()} تومان
                 </span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-zinc-500">تخفیف ۱۰٪</span>
-                <span className="font-medium">
-                  {discount.toLocaleString()} تومان
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-zinc-500">هزینه ارسال</span>
-                <span className="font-medium">
-                  {shippingCost.toLocaleString()} تومان
-                </span>
-              </div>
+
               <hr className="border-zinc-300" />
               <div className="flex justify-between">
                 <span className="font-semibold">جمع کل</span>
