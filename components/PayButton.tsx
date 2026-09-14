@@ -42,7 +42,7 @@ const PayButton = ({ orderId }: Props) => {
       disabled={loading}
       className="w-full disabled:opacity-50"
     >
-      {loading ? "در حال اتصال به درگاه..." : "پرداخت با زرین‌پال"}
+      {loading ? "در حال اتصال به درگاه..." : "پرداخت با بیت‌پی"}
     </Button>
   );
 };

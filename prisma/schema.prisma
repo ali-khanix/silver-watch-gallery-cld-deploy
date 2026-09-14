@@ -74,8 +74,9 @@ model Order {
   user   User   @relation(fields: [userId], references: [id])
   status String @default("pending")
 
-  // ZarinPal payment tracking (separate from the fulfillment `status` above).
+  // Bitpay payment tracking (separate from the fulfillment `status` above).
   // paymentStatus: "unpaid" | "paid" | "failed"
+  // paymentAuthority holds Bitpay's id_get; paymentRefId holds Bitpay's trans_id.
   paymentStatus    String    @default("unpaid")
   paymentAuthority String?   @unique
   paymentRefId     Int?

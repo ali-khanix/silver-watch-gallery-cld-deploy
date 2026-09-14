@@ -1,26 +1,28 @@
 import { prisma } from "@/lib/prisma";
-import { zarinpal, getBaseUrl } from "@/lib/zarinpal";
+import { verifyBitpayPayment, getBaseUrl } from "@/lib/bitpay";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const authority = searchParams.get("Authority");
-  const status = searchParams.get("Status");
+  const transId = searchParams.get("trans_id");
+  const idGet = searchParams.get("id_get");
 
-  if (!authority) {
+  if (!idGet) {
     return NextResponse.redirect(new URL("/cart", getBaseUrl()));
   }
 
+  // paymentAuthority holds Bitpay's id_get, set when the payment was created.
   const order = await prisma.order.findUnique({
-    where: { paymentAuthority: authority },
+    where: { paymentAuthority: idGet },
   });
 
   if (!order) {
     return NextResponse.redirect(new URL("/cart", getBaseUrl()));
   }
 
-  // User cancelled or the bank rejected the transaction before it completed.
-  if (status !== "OK") {
+  // No trans_id means the user cancelled or the bank rejected the
+  // transaction before Bitpay could complete it.
+  if (!transId) {
     await prisma.order.update({
       where: { id: order.id },
       data: { paymentStatus: "failed" },
@@ -35,19 +37,16 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const response = await zarinpal.verifications.verify({
-      amount: order.total,
-      authority,
-    });
+    const result = await verifyBitpayPayment(transId, idGet);
 
-    const code = response?.data?.code;
-
-    if (code === 100 || code === 101) {
+    // status 1 = success, 11 = already verified before (treat as success,
+    // don't re-credit). Anything else = failed/invalid transaction.
+    if (result.status === 1 || result.status === 11) {
       await prisma.order.update({
         where: { id: order.id },
         data: {
           paymentStatus: "paid",
-          paymentRefId: response.data.ref_id ?? null,
+          paymentRefId: Number(transId) || null,
           paidAt: new Date(),
         },
       });
@@ -58,7 +57,7 @@ export async function GET(req: NextRequest) {
       });
     }
   } catch (error) {
-    console.error("ZarinPal verification failed:", error);
+    console.error("Bitpay verification failed:", error);
     await prisma.order.update({
       where: { id: order.id },
       data: { paymentStatus: "failed" },

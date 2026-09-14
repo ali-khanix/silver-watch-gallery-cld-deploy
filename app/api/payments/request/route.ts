@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth";
-import { zarinpal, getBaseUrl } from "@/lib/zarinpal";
+import { createBitpayPayment, getBaseUrl, getGatewayUrl } from "@/lib/bitpay";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -36,33 +36,33 @@ export async function POST(req: Request) {
   }
 
   try {
-    const response = await zarinpal.payments.create({
-      amount: order.total,
-      callback_url: `${getBaseUrl()}/api/payments/callback`,
-      description: `پرداخت سفارش #${order.id}`,
-      mobile: order.phone,
+    // order.total is stored/displayed in Toman; Bitpay expects Rial.
+    const amountRial = order.total * 10;
+
+    const result = await createBitpayPayment({
+      amountRial,
+      redirect: `${getBaseUrl()}/api/payments/callback`,
+      name: order.name,
       email: order.email,
+      description: `پرداخت سفارش #${order.id}`,
     });
 
-    if (response?.data?.code !== 100 || !response?.data?.authority) {
+    if (!result.ok) {
+      console.error("Bitpay payment request failed with code:", result.errorCode);
       return NextResponse.json(
-        { error: "خطا در ایجاد درخواست پرداخت", details: response?.errors },
+        { error: "خطا در ایجاد درخواست پرداخت" },
         { status: 502 }
       );
     }
 
-    const authority = response.data.authority as string;
-
     await prisma.order.update({
       where: { id: order.id },
-      data: { paymentAuthority: authority, paymentStatus: "unpaid" },
+      data: { paymentAuthority: result.idGet, paymentStatus: "unpaid" },
     });
 
-    return NextResponse.json({
-      url: zarinpal.payments.getRedirectUrl(authority),
-    });
+    return NextResponse.json({ url: getGatewayUrl(result.idGet) });
   } catch (error) {
-    console.error("ZarinPal payment request failed:", error);
+    console.error("Bitpay payment request failed:", error);
     return NextResponse.json(
       { error: "ارتباط با درگاه پرداخت برقرار نشد" },
       { status: 502 }
